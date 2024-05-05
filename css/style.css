@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: grey;
+    --font-type: Arial, Helvetica, sans-serif;
+    --top-container-bg-color: lightgrey;
+    --sky-color: lightblue;
+    --ground-color: darkgreen;
+    --modal-bg-color: rgba(255, 255, 255, 0.5);
+    --temp-color: grey;
+}
+
+body {
+    font-family: var(--font-type);
+    font-weight: bold;
+    text-align: center;
+    background-color: var(--bg-color);
+}
+
+header, footer {
+    height: 80px;
+
+    padding: 22px;
+    background-color: whitesmoke;
+
+    font-size: 20px;
+}
+
+.top-container {
+    background-color: var(--top-container-bg-color);
+    display: flex;
+    justify-content: center;
+    
+}
+
+.top-container h2 {
+    margin: 10px;
+}
+
+
+
+h2 {
+    font-size: 16px;
+}
+
+.board-container {
+    width: 80vw;
+    height: 50vw;
+    margin: 30px auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+}
+
+.sky {
+    background-color: var(--sky-color)
+}
+
+.ground {
+    background-color: var(--ground-color)
+}
+
+.hero img {
+    width: 40px;
+}
+
+.alien img {
+    width: 20px;
+}
+
+.laser img {
+    width: 10px;
+}
+
+.modal {
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    left: 30%;
+    top: 30%;
+    border-radius: 8px;
+    background-color: var(--temp-color);
+    padding: 20px;
+  }
+  
+  .hidden {
+    display: none;
+  }

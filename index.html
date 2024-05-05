@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body onkeyup="onKeyDown(event)" onload="init()">
+    <header>Space Invaders</header>
+    <div class="top-container">
+        <h2>Score: <span class="score">0</span></h2>
+        <h2>Aliens: <span class="aliens-count"></span></h2>
+    </div>
+    <table class="board-container">
+        <tbody></tbody>
+    </table>
+    <div class="modal hidden">
+        <h2><span class="msg"></span></h2>
+        <button onclick="init()">Play Again</button>
+     </div>
+
+    <footer>Moshik Alper</footer>
+    <script src="js/util.js"></script>
+    <script src="js/hero.js"></script>
+    <script src="js/alien.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>
