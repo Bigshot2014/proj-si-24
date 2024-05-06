@@ -13,16 +13,25 @@
     <header>Space Invaders</header>
     <div class="top-container">
         <h2>Score: <span class="score">0</span></h2>
+        
         <h2>Aliens: <span class="aliens-count"></span></h2>
     </div>
+    <div class="controls-container">
+        <button class="start-btn" onclick="startGame()">
+            <img src="img/start.png" alt="Start game">
+        </button>
+        <button class="restart-btn disabled" onclick="restartGame()">
+            <img src="img/restart.png" alt="Restart game">
+        </button>
+
+    </div>
+
     <table class="board-container">
         <tbody></tbody>
     </table>
     <div class="modal hidden">
-        <h2><span class="msg"></span></h2>
-        <button onclick="init()">Play Again</button>
+        <h2><span class="msg">Game Over</span></h2>
      </div>
-
     <footer>Moshik Alper</footer>
     <script src="js/util.js"></script>
     <script src="js/hero.js"></script>

@@ -7,38 +7,38 @@ const ALIEN_ROW_COUNT = 3
 const HERO = '♆'
 const ALIEN = '👽'
 const LASER = '⤊'
+const SUPER_LASER = '^'
 
 const SKY = 'SKY'
 const GROUND = 'GROUND'
 
-// Matrix of cell objects. e.g.: {type: SKY, gameObject: ALIEN}
 var gBoard
 
-var gGame
+var gGame = {
+    isOn: false,
+    alienCount: 0,
+    score: 0
+}
 
-// Called when game loads
 function init() {
-    gGame = {
-        isOn: true,
-        alienCount: 0,
-        score: 0
-    }
 
+    resetGame()
     gBoard = createBoard()
-    console.log(gBoard)
 
     createHero(gBoard)
+
+    gGame.alienCount = 0
     createAliens(gBoard)
-    moveAliens()
 
     renderBoard(gBoard)
+}
 
+function resetGame() {
     hideModal()
     updateScore(0)
 }
 
-// Create and returns the board with aliens on top, ground at bottom
-// use the functions: createCell, createHero, createAliens
+
 function createBoard() {
 
     const board = []
@@ -55,7 +55,6 @@ function createBoard() {
     return board
 }
 
-// Render the board as a <table> to the page
 function renderBoard(board) {
     var strHTML = ''
     for (var i = 0; i < board.length; i++) {
@@ -65,7 +64,7 @@ function renderBoard(board) {
             const cell = board[i][j]
             const className = `cell cell-${i}-${j} `
 
-            var cellClass = '' 
+            var cellClass = ''
             if (cell.gameObject !== null || cell.gameObject === LASER) {
                 cellClass = 'sky'
             } else {
@@ -79,6 +78,8 @@ function renderBoard(board) {
                 strHTML += getAlienHTML()
             } else if (cell.gameObject === LASER) {
                 strHTML += getLaserHTML()
+            } else if (cell.gameObject === SUPER_LASER) {
+                strHTML += getSuperLaserHTML()
             }
             `</td>`
         }
@@ -90,7 +91,6 @@ function renderBoard(board) {
 
 
 
-// Returns a new cell object. e.g.: {type: SKY, gameObject: ALIEN}
 function createCell(gameObject = null) {
     return {
         type: SKY,
@@ -98,11 +98,30 @@ function createCell(gameObject = null) {
     }
 }
 
-// position such as: {i: 2, j: 7}
 function updateCell(pos, gameObject = null) {
     gBoard[pos.i][pos.j].gameObject = gameObject
     var elCell = getElCell(pos)
     elCell.innerHTML = gameObject || ''
+}
+
+function startGame() {
+    if (gGame.isOn) return
+    gGame.isOn = true
+    moveAliens()
+
+    document.querySelector('.start-btn').classList.add('disabled')
+    document.querySelector('.restart-btn').classList.remove('disabled')
+
+}
+
+function restartGame() {
+    clearInterval(gIntervalAliens)
+    init()
+    gGame.isOn = true
+    moveAliens()
+
+    document.querySelector('.start-btn').classList.add('disabled')
+    document.querySelector('.restart-btn').classList.remove('disabled')
 }
 
 function checkVictory() {
@@ -115,7 +134,7 @@ function gameOver() {
     clearInterval(gIntervalAliens)
     gGame.isOn = false
     showModal('Game Over')
-}  
+}
 
 function showModal(msg) {
     document.querySelector('.modal').classList.toggle('hidden')
@@ -124,5 +143,8 @@ function showModal(msg) {
 
 function hideModal() {
     document.querySelector('.modal').classList.add('hidden')
+    document.querySelector('.start-btn').classList.remove('disabled')
+
+
 }
 
