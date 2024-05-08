@@ -8,9 +8,9 @@ const HERO = '♆'
 const ALIEN = '👽'
 const LASER = '⤊'
 const SUPER_LASER = '^'
+const BLAST = '#'
 
 const SKY = 'SKY'
-const GROUND = 'GROUND'
 
 var gBoard
 
@@ -36,6 +36,8 @@ function init() {
 function resetGame() {
     hideModal()
     updateScore(0)
+    updateSuperAttacksCount(0)
+
 }
 
 
@@ -49,7 +51,6 @@ function createBoard() {
         for (var j = 0; j < size; j++) {
             board[i][j] = createCell()
 
-            if (i === size - 1) board[i][j].type = GROUND
         }
     }
     return board
@@ -64,14 +65,7 @@ function renderBoard(board) {
             const cell = board[i][j]
             const className = `cell cell-${i}-${j} `
 
-            var cellClass = ''
-            if (cell.gameObject !== null || cell.gameObject === LASER) {
-                cellClass = 'sky'
-            } else {
-                cellClass = (cell.type === SKY || cell.type !== GROUND) ? 'sky' : 'ground'
-            }
-
-            strHTML += `<td data-i="${i}" data-j="${j}" class="${className}${cellClass}">`
+            strHTML += `<td data-i="${i}" data-j="${j}" class="sky ${className}$">`
             if (cell.gameObject === HERO) {
                 strHTML += getHeroHTML()
             } else if (cell.gameObject === ALIEN) {
@@ -80,6 +74,8 @@ function renderBoard(board) {
                 strHTML += getLaserHTML()
             } else if (cell.gameObject === SUPER_LASER) {
                 strHTML += getSuperLaserHTML()
+            } else if (cell.gameObject === BLAST) {
+                strHTML += getBlastHTML()
             }
             `</td>`
         }

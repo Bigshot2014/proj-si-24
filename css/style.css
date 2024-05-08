@@ -19,7 +19,10 @@ body {
     font-family: var(--font-type);
     font-weight: bold;
     text-align: center;
-    background-color: var(--color-zero);
+
+    background-image: url('../img/bg.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
 header,
@@ -55,7 +58,7 @@ h2 {
 }
 
 .controls-container {
-    background-color: var(--color-zero);
+    background-color: var(--color-one);
 }
 
 .board-container {
@@ -72,15 +75,6 @@ table {
 td {
     width: 40px;
     height: 40px;
-    /* border: 1px solid black; */
-}
-
-.sky {
-    background-color: var(--color-zero)
-}
-
-.ground {
-    background-color: var(--color-two)
 }
 
 .hero img {
@@ -96,6 +90,10 @@ td {
 }
 
 .super-laser img {
+    width: 30px;
+}
+
+.blast img {
     width: 30px;
 }
 
@@ -146,6 +144,7 @@ h2 .msg {
     border: var(--color-five) solid 4px;
     border-radius: 20px;
     font-weight: bolder;
+    margin-right: 30px;
 }
 
 .restart-btn img {
@@ -156,4 +155,31 @@ h2 .msg {
     opacity: 0.5;
     pointer-events: none;
 
+}
+
+.super-attacks-count {
+    margin-top: 20px;
+    padding: 6px 12px;
+    background-color: var(--color-four);
+    color: var(--color-one);
+    border: var(--color-five) solid 4px;
+    border-radius: 20px;
+    font-weight: bolder;
+    
+}
+
+.super-activated {
+    background-color: red;
+}
+
+.blow-negs {
+    margin-top: 20px;
+    padding: 6px 12px;
+    margin-left: 8px;
+    background-color: var(--color-four);
+    color: var(--color-one);
+    border: var(--color-five) solid 4px;
+    border-radius: 20px;
+    font-weight: bolder;
+    
 }
