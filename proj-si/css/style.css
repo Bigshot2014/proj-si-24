@@ -1,0 +1,221 @@
+* {
+    box-sizing: border-box;
+    
+}
+
+:root {
+    --font-type: Arial, Helvetica, sans-serif;
+ 
+    --color-zero: #06021d;
+    --color-one: #414579;
+    --color-two: #3e3bff;
+    --color-three: #0095ff;
+    --color-four: #d5d8f8;
+    --color-five: #1abbc9;
+
+
+}
+
+body {
+    font-family: var(--font-type);
+    font-weight: bold;
+    text-align: center;
+
+    background-image: url('../img/bg.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+header,
+footer {
+    height: 80px;
+    padding: 22px;
+    background-color: var(--color-one);
+    color: var(--color-zero);
+
+    user-select: none;
+    pointer-events: none;
+}
+
+header {
+    font-size: 30px;
+}
+
+footer {
+    font-size: 16px;
+}
+
+.top-container {
+    background-color: var(--color-one);
+    display: flex;
+    justify-content: center;
+    user-select: none;
+    pointer-events: none;
+}
+
+.top-container h2 {
+    margin: 10px;
+    color: var(--color-four);
+}
+
+h2 {
+    font-size: 16px;
+}
+
+.controls-container {
+    background-color: var(--color-one);
+}
+
+.board-container {
+    width: 50vw;
+    height: 30vw;
+    margin: 30px auto;
+
+    user-select: none;
+    pointer-events: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    width: 40px;
+    height: 40px;
+}
+
+.hero img {
+    width: 40px;
+}
+
+.alien img {
+    width: 30px;
+ }
+
+.laser img {
+    width: 10px;
+}
+
+.super-laser img {
+    width: 30px;
+}
+
+.blast img {
+    width: 30px;
+}
+
+.modal {
+    position: fixed;
+
+    background-color: none;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h2 .msg {
+    color: var(--color-four);
+    font-size: 100px;
+    font-weight: bolder;
+    user-select: none;
+    pointer-events: none;
+}
+
+
+.hidden {
+    display: none;
+}
+
+.start-btn {
+    margin-top: 20px;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: var(--color-four);
+    color: var(--color-five);
+    border: var(--color-five) solid 1px;
+    border-radius: 20px;
+    font-weight: bolder;
+}
+
+.start-btn img {
+    width: 12px;
+}
+
+.restart-btn {
+    margin-top: 20px;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: var(--color-four);
+    color: var(--color-five);
+    border: var(--color-five) solid 1px;
+    border-radius: 20px;
+    font-weight: bolder;
+    margin-right: 30px;
+    outline: none;;
+}
+
+.restart-btn img {
+    width: 12px;
+}
+
+.freeze-unfreeze-btn {
+    margin-top: 20px;
+    padding: 6px 12px;
+    background-color: var(--color-four);
+    color: var(--color-five);
+    border: var(--color-five) solid 1px;
+    border-radius: 20px;
+    font-weight: bolder;
+    margin-left: 16px;
+
+    cursor: pointer;
+    outline: none;
+}
+
+.freeze-unfreeze-btn img {
+    width: 12px;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    user-select: none;
+    pointer-events: none;
+}
+
+.super-attacks-count {
+    margin-top: 20px;
+    padding: 6px 12px;
+    background-color: var(--color-four);
+    color: var(--color-one);
+    border: var(--color-five) solid 1px;
+    border-radius: 20px;
+    font-weight: bolder;
+
+    user-select: none;
+    pointer-events: none;
+    
+}
+
+.super-activated {
+    background-color: var(--color-two);
+    border: var(--color-one);
+    color: var(--color-four);
+}
+
+.blow-negs {
+    margin-top: 20px;
+    padding: 6px 12px;
+    margin-left: 8px;
+    background-color: var(--color-four);
+    color: var(--color-one);
+    border: var(--color-five) solid 1px;
+    border-radius: 20px;
+    font-weight: bolder;
+
+    user-select: none;
+    pointer-events: none;
+    
+}
