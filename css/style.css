@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    
 }
 
 :root {
@@ -9,8 +10,8 @@
     --color-one: #414579;
     --color-two: #3e3bff;
     --color-three: #0095ff;
-    --color-four: #1abbc9;
-    --color-five: #d5d8f8;
+    --color-four: #d5d8f8;
+    --color-five: #1abbc9;
 
 
 }
@@ -30,7 +31,10 @@ footer {
     height: 80px;
     padding: 22px;
     background-color: var(--color-one);
-    color: var(--color-five)
+    color: var(--color-zero);
+
+    user-select: none;
+    pointer-events: none;
 }
 
 header {
@@ -45,12 +49,13 @@ footer {
     background-color: var(--color-one);
     display: flex;
     justify-content: center;
-
+    user-select: none;
+    pointer-events: none;
 }
 
 .top-container h2 {
     margin: 10px;
-    color: var(--color-five);
+    color: var(--color-four);
 }
 
 h2 {
@@ -65,6 +70,9 @@ h2 {
     width: 50vw;
     height: 30vw;
     margin: 30px auto;
+
+    user-select: none;
+    pointer-events: none;
 }
 
 table {
@@ -108,7 +116,7 @@ td {
 }
 
 h2 .msg {
-    color: var(--color-five);
+    color: var(--color-four);
     font-size: 100px;
     font-weight: bolder;
     user-select: none;
@@ -126,7 +134,7 @@ h2 .msg {
     cursor: pointer;
     background-color: var(--color-four);
     color: var(--color-five);
-    border: var(--color-five) solid 4px;
+    border: var(--color-five) solid 1px;
     border-radius: 20px;
     font-weight: bolder;
 }
@@ -141,20 +149,40 @@ h2 .msg {
     cursor: pointer;
     background-color: var(--color-four);
     color: var(--color-five);
-    border: var(--color-five) solid 4px;
+    border: var(--color-five) solid 1px;
     border-radius: 20px;
     font-weight: bolder;
     margin-right: 30px;
+    outline: none;;
 }
 
 .restart-btn img {
     width: 12px;
 }
 
+.freeze-unfreeze-btn {
+    margin-top: 20px;
+    padding: 6px 12px;
+    background-color: var(--color-four);
+    color: var(--color-five);
+    border: var(--color-five) solid 1px;
+    border-radius: 20px;
+    font-weight: bolder;
+    margin-left: 16px;
+
+    cursor: pointer;
+    outline: none;
+}
+
+.freeze-unfreeze-btn img {
+    width: 12px;
+}
+
 .disabled {
     opacity: 0.5;
+    cursor: not-allowed;
+    user-select: none;
     pointer-events: none;
-
 }
 
 .super-attacks-count {
@@ -162,14 +190,19 @@ h2 .msg {
     padding: 6px 12px;
     background-color: var(--color-four);
     color: var(--color-one);
-    border: var(--color-five) solid 4px;
+    border: var(--color-five) solid 1px;
     border-radius: 20px;
     font-weight: bolder;
+
+    user-select: none;
+    pointer-events: none;
     
 }
 
 .super-activated {
-    background-color: red;
+    background-color: var(--color-two);
+    border: var(--color-one);
+    color: var(--color-four);
 }
 
 .blow-negs {
@@ -178,8 +211,11 @@ h2 .msg {
     margin-left: 8px;
     background-color: var(--color-four);
     color: var(--color-one);
-    border: var(--color-five) solid 4px;
+    border: var(--color-five) solid 1px;
     border-radius: 20px;
     font-weight: bolder;
+
+    user-select: none;
+    pointer-events: none;
     
 }

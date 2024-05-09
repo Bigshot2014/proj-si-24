@@ -14,31 +14,28 @@ const SKY = 'SKY'
 
 var gBoard
 
-var gGame = {
-    isOn: false,
-    alienCount: 0,
-    score: 0
-}
+var gGame 
 
 function init() {
 
-    resetGame()
+    gGame = {
+        isOn: false,
+        alienCount: 0,
+        score: 0
+    }
+
     gBoard = createBoard()
-
+    
     createHero(gBoard)
-
-    gGame.alienCount = 0
     createAliens(gBoard)
-
+    
+    gIsAlienFreeze = false
     renderBoard(gBoard)
-}
-
-function resetGame() {
+    
     hideModal()
-    updateScore(0)
     updateSuperAttacksCount(0)
 
-}
+} 
 
 
 function createBoard() {
@@ -103,6 +100,7 @@ function updateCell(pos, gameObject = null) {
 function startGame() {
     if (gGame.isOn) return
     gGame.isOn = true
+    
     moveAliens()
 
     document.querySelector('.start-btn').classList.add('disabled')
@@ -114,10 +112,21 @@ function restartGame() {
     clearInterval(gIntervalAliens)
     init()
     gGame.isOn = true
+
     moveAliens()
 
-    document.querySelector('.start-btn').classList.add('disabled')
-    document.querySelector('.restart-btn').classList.remove('disabled')
+    var elStartBtn = document.querySelector('.start-btn')
+    elStartBtn.classList.add('disabled')
+    var elRestartBtn = document.querySelector('.restart-btn')
+    
+    elRestartBtn.classList.add('disabled')
+    elRestartBtn.removeAttribute('onclick')
+    
+    setTimeout(() => {
+        elRestartBtn.setAttribute('onclick', 'restartGame()')
+        elRestartBtn.classList.remove('disabled')
+    }, 5000)
+
 }
 
 function checkVictory() {

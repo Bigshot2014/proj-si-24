@@ -11,7 +11,7 @@ var gIntervalAliens
 var gAliensTopRowIdx
 var gAliensBottomRowIdx
 
-var gIsAlienFreeze = true
+var gIsAlienFreeze
 
 
 function createAliens(board) {
@@ -25,8 +25,8 @@ function createAliens(board) {
 
     gAliensTopRowIdx = 0
     gAliensBottomRowIdx = gAliensTopRowIdx + ALIEN_ROW_COUNT - 1
-}
 
+}
 
 function createAlien(board, row, col) {
     const alien = {
@@ -61,7 +61,7 @@ function shiftBoardDown(board, fromI, toI) {
 
     for (var j = 0; j < board[0].length; j++) {
         for (var i = toI; i > fromI; i--) {
-            board[i][j].gameObject = board[i - 1][j].gameObject
+             board[i][j].gameObject = board[i - 1][j].gameObject
         }
         board[fromI][j] = { type: 'SKY', gameObject: null }
     }
@@ -69,12 +69,15 @@ function shiftBoardDown(board, fromI, toI) {
 }
 
 function moveAliens() {
-    if (!gGame.isOn || !gIsAlienFreeze) return
+    if (!gGame.isOn) return
+    if (gIntervalAliens) clearInterval(gIntervalAliens)
 
-     var moveRight = true
-    
+
+    var moveRight = true
+
     gIntervalAliens = setInterval(() => {
-     
+        if (gIsAlienFreeze) return
+
         if (moveRight) {
             shiftBoardRight(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
         } else {
@@ -87,7 +90,7 @@ function moveAliens() {
                 gAliensBottomRowIdx++
 
                 shiftBoardDown(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
-    
+
                 gAliensTopRowIdx++
 
                 renderBoard(gBoard)
@@ -97,9 +100,17 @@ function moveAliens() {
             } else shiftBoardLeft(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
         }
 
-        if (checkAliensOnHeroRow()) gameOver()
+        for (var i = gAliensTopRowIdx; i <= gAliensBottomRowIdx; i++) {
+            for (var j = 0; j < BOARD_SIZE; j++) {
+                if (gBoard[i][j].gameObject === LASER || gBoard[i][j].gameObject === SUPER_LASER || gBoard[i][j].gameObject === BLAST) {
+                    gBoard[i][j].gameObject = null
+                }       
+            }
+        }
 
-        renderBoard(gBoard)
+        if (checkAliensOnHeroRow()) gameOver()
+            renderBoard(gBoard)
+
 
         if (gBoard[gAliensTopRowIdx][BOARD_SIZE - 1].gameObject === ALIEN) {
             if (isBottomRowEmpty()) {
@@ -108,9 +119,9 @@ function moveAliens() {
 
             gAliensBottomRowIdx++
             shiftBoardDown(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
-         
+
             gAliensTopRowIdx++
-            
+
             renderBoard(gBoard)
 
             moveRight = false
@@ -130,11 +141,24 @@ function isBottomRowEmpty() {
 
 function checkAliensOnHeroRow() {
     const heroRowIdx = gHero.pos.i
-    
+
     for (var j = 0; j < BOARD_SIZE; j++) {
         if (gBoard[heroRowIdx][j].gameObject === ALIEN) return true
     }
     return false
+}
+
+function toggleFreeze() {
+    gIsAlienFreeze = true
+    var elFreezeBtn = document.querySelector('.freeze-unfreeze-btn')
+    elFreezeBtn.innerHTML = `<img src="img/pause.png">`
+    elFreezeBtn.classList.add('disabled')
+
+    setTimeout (() => {
+    gIsAlienFreeze = false
+    elFreezeBtn.classList.remove('disabled')
+    }, 5000)
+ 
 }
 
 function updateAlienCount() {
