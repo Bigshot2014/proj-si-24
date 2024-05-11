@@ -1,12 +1,11 @@
 'use strict'
 
-const ALIEN_IMG = '<img src="img/alien.png">'
-
 const ALIEN_SPEED = 500
+
 var gAliens = []
+var gRemovedAliens = []
 
 var gIntervalAliens
-
 
 var gAliensTopRowIdx
 var gAliensBottomRowIdx
@@ -22,6 +21,7 @@ function createAliens(board) {
         }
     }
     updateAlienCount()
+    if (gIntervalAliens) clearInterval(gIntervalAliens)
 
     gAliensTopRowIdx = 0
     gAliensBottomRowIdx = gAliensTopRowIdx + ALIEN_ROW_COUNT - 1
@@ -29,8 +29,11 @@ function createAliens(board) {
 }
 
 function createAlien(board, row, col) {
+    const alienImg =  `img/alien${row + 1}.png`
+    
     const alien = {
-        location: { i: row, j: col }
+        location: { i: row, j: col },
+        image: alienImg
     }
     gAliens.push(alien)
     board[alien.location.i][alien.location.j].gameObject = ALIEN
@@ -69,67 +72,102 @@ function shiftBoardDown(board, fromI, toI) {
 }
 
 function moveAliens() {
-    if (!gGame.isOn) return
-    if (gIntervalAliens) clearInterval(gIntervalAliens)
+    if (!gGame.isOn || gIsAlienFreeze) return
 
-
-    var moveRight = true
-
-    gIntervalAliens = setInterval(() => {
-        if (gIsAlienFreeze) return
-
-        if (moveRight) {
-            shiftBoardRight(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
-        } else {
-            if (gBoard[gAliensTopRowIdx][0].gameObject === ALIEN) {
-
-                if (isBottomRowEmpty()) {
-                    gAliensBottomRowIdx--
-                }
-
-                gAliensBottomRowIdx++
-
-                shiftBoardDown(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
-
-                gAliensTopRowIdx++
-
-                renderBoard(gBoard)
-
-                moveRight = true
-
-            } else shiftBoardLeft(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
-        }
-
-        for (var i = gAliensTopRowIdx; i <= gAliensBottomRowIdx; i++) {
-            for (var j = 0; j < BOARD_SIZE; j++) {
-                if (gBoard[i][j].gameObject === LASER || gBoard[i][j].gameObject === SUPER_LASER || gBoard[i][j].gameObject === BLAST) {
-                    gBoard[i][j].gameObject = null
-                }       
+    if (gGame.dir === 'right') {
+        
+        for (var i = 0; i < gAliens.length; i++) {
+            const alien = gAliens[i]
+            const nextCol = alien.location.j + 1
+            if (nextCol > BOARD_SIZE - 1) {
+                moveDown()
+                gGame.dir = 'left'
+                return
             }
+            alien.location.j++
         }
-
-        if (checkAliensOnHeroRow()) gameOver()
-            renderBoard(gBoard)
-
-
-        if (gBoard[gAliensTopRowIdx][BOARD_SIZE - 1].gameObject === ALIEN) {
-            if (isBottomRowEmpty()) {
-                gAliensBottomRowIdx--
+        shiftBoardRight(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
+        renderBoard(gBoard)
+   
+    } else if (gGame.dir === 'left') {
+        for (var i = 0; i < gAliens.length; i++) {
+            const alien = gAliens[i]
+            const nextCol = alien.location.j - 1
+            if (nextCol < 0) {
+                moveDown()
+                gGame.dir = 'right'
+                return
             }
-
-            gAliensBottomRowIdx++
-            shiftBoardDown(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
-
-            gAliensTopRowIdx++
-
-            renderBoard(gBoard)
-
-            moveRight = false
+            alien.location.j--
         }
-    }, ALIEN_SPEED)
+        shiftBoardLeft(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
+        renderBoard(gBoard)
+
+    }
+
+    for (var i = gAliensTopRowIdx; i <= gAliensBottomRowIdx; i++) {
+        for (var j = 0; j < BOARD_SIZE; j++) {
+            if (gBoard[i][j].gameObject === LASER || gBoard[i][j].gameObject === SUPER_LASER || gBoard[i][j].gameObject === BLAST) {
+                gBoard[i][j].gameObject = null
+            }       
+        }
+    }
+}
+
+function moveDown() {
+
+    for (var i = 0; i < gAliens.length; i++) {
+        const alien = gAliens[i]
+        alien.location.i++
+    }
+    
+    gAliensBottomRowIdx++
+    
+    shiftBoardDown(gBoard, gAliensTopRowIdx, gAliensBottomRowIdx)
+    gAliensTopRowIdx++
+    renderBoard(gBoard)
+
+    if (checkAliensOnHeroRow()) gameOver()
+    renderBoard(gBoard)
+
+    if (gBoard[gAliensTopRowIdx][BOARD_SIZE - 1].gameObject === ALIEN) {
+        if (isBottomRowEmpty()) {
+            gAliensBottomRowIdx--
+        }
+    }
+}
+
+function handleAlienHit(pos, alienHitCount) {
+    const currCell = gBoard[pos.i][pos.j]
+    var count = alienHitCount
+    if (currCell.gameObject === ALIEN) {
+        removeAlien(pos)
+        clearInterval(gLaserInterval)
+
+        gGame.alienCount -= alienHitCount
+        updateAlienCount()
+
+        updateScore(10 * alienHitCount)
+        checkVictory()    
+
+        gHero.isShoot = false
+    }
+    renderBoard(gBoard)
 }
 
 
+function removeAlien(location) {
+    for (let i = 0; i < gAliens.length; i++) {
+        const currAlien = gAliens[i]
+        if (currAlien.location.i === location.i && currAlien.location.j === location.j) {
+            gAliens.splice(i, 1)
+            gRemovedAliens.push(currAlien)
+
+            updateCell(location, null)
+        }
+    }
+
+}
 function isBottomRowEmpty() {
     for (var j = 0; j < BOARD_SIZE; j++) {
         if (gBoard[gAliensBottomRowIdx][j].gameObject === ALIEN) {
@@ -150,13 +188,9 @@ function checkAliensOnHeroRow() {
 
 function toggleFreeze() {
     gIsAlienFreeze = true
-    var elFreezeBtn = document.querySelector('.freeze-unfreeze-btn')
-    elFreezeBtn.innerHTML = `<img src="img/pause.png">`
-    elFreezeBtn.classList.add('disabled')
 
     setTimeout (() => {
     gIsAlienFreeze = false
-    elFreezeBtn.classList.remove('disabled')
     }, 5000)
  
 }
@@ -165,6 +199,11 @@ function updateAlienCount() {
     document.querySelector('span.aliens-count').innerText = gGame.alienCount
 }
 
-function getAlienHTML() {
-    return `<span class="alien">${ALIEN_IMG}</span>`
+function getAlienHTML(row) {
+    var alien = gAliens.find(alien => alien.location.i === row)
+    if (!alien) return
+    return `<span class="alien"><img src="${alien.image}"></span>`
 }
+
+
+

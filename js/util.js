@@ -19,3 +19,8 @@ function updateScore(diff) {
     }
     document.querySelector('span.score').innerText = gGame.score
 }
+
+function getRandomIntInclusive(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+}
+

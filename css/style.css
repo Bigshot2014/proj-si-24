@@ -105,6 +105,10 @@ td {
     width: 30px;
 }
 
+.space-candy img {
+    width: 20px;
+}
+
 .modal {
     position: fixed;
 
@@ -157,24 +161,6 @@ h2 .msg {
 }
 
 .restart-btn img {
-    width: 12px;
-}
-
-.freeze-unfreeze-btn {
-    margin-top: 20px;
-    padding: 6px 12px;
-    background-color: var(--color-four);
-    color: var(--color-five);
-    border: var(--color-five) solid 1px;
-    border-radius: 20px;
-    font-weight: bolder;
-    margin-left: 16px;
-
-    cursor: pointer;
-    outline: none;
-}
-
-.freeze-unfreeze-btn img {
     width: 12px;
 }
 
