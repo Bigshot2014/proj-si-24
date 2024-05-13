@@ -42,7 +42,7 @@ header {
 }
 
 footer {
-    font-size: 16px;
+    font-size: 24px;
 }
 
 .top-container {
@@ -58,6 +58,7 @@ footer {
     color: var(--color-four);
 }
 
+
 h2 {
     font-size: 16px;
 }
@@ -70,7 +71,7 @@ h2 {
     width: 50vw;
     height: 30vw;
     margin: 30px auto;
-
+    
     user-select: none;
     pointer-events: none;
 }
@@ -91,7 +92,7 @@ td {
 
 .alien img {
     width: 30px;
- }
+}
 
 .laser img {
     width: 10px;
@@ -111,9 +112,9 @@ td {
 
 .modal {
     position: fixed;
-
+    
     background-color: none;
-
+    
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -179,7 +180,7 @@ h2 .msg {
     border: var(--color-five) solid 1px;
     border-radius: 20px;
     font-weight: bolder;
-
+    
     user-select: none;
     pointer-events: none;
     
@@ -200,8 +201,30 @@ h2 .msg {
     border: var(--color-five) solid 1px;
     border-radius: 20px;
     font-weight: bolder;
-
+    
     user-select: none;
     pointer-events: none;
     
+}
+
+.bottom-container {
+    background-color: var(--color-one);
+    display: flex;
+    justify-content: center;
+}
+
+.bottom-container h2 {
+    margin: 10px;
+    color: var(--color-four);
+}
+
+.bottom-container button {
+    height: 20px;
+    width: 70px ;
+    cursor: pointer;
+    background-color: var(--color-four);
+    color: var(--color-five);
+    border: var(--color-five) solid 1px;
+    border-radius: 20px;
+    font-weight: bolder;
 }

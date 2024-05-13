@@ -1,6 +1,5 @@
 'use strict'
 
-const ALIEN_SPEED = 500
 
 var gAliens = []
 var gRemovedAliens = []
@@ -15,8 +14,8 @@ var gIsAlienFreeze
 
 function createAliens(board) {
     gAliens = []
-    for (var i = 0; i < ALIEN_ROW_COUNT; i++) {
-        for (var j = 0; j < ALIEN_ROW_LENGTH; j++) {
+    for (var i = 0; i < gLevel.ALIEN_ROW_COUNT; i++) {
+        for (var j = 0; j < gLevel.ALIEN_ROW_LENGTH; j++) {
             createAlien(board, i, j)
         }
     }
@@ -24,7 +23,7 @@ function createAliens(board) {
     if (gIntervalAliens) clearInterval(gIntervalAliens)
 
     gAliensTopRowIdx = 0
-    gAliensBottomRowIdx = gAliensTopRowIdx + ALIEN_ROW_COUNT - 1
+    gAliensBottomRowIdx = gAliensTopRowIdx + gLevel.ALIEN_ROW_COUNT - 1
 
 }
 

@@ -1,8 +1,6 @@
 'use strict'
 
 const BOARD_SIZE = 14
-const ALIEN_ROW_LENGTH = 8
-const ALIEN_ROW_COUNT = 3
 
 const HERO = '♆'
 const ALIEN = '👽'
@@ -14,6 +12,13 @@ const SPACE_CANDY = 'C'
 const SKY = 'SKY'
 
 const SPACE_CANDY_IMG = '<img src="img/space-candy.png">'
+
+var gLevel = {
+    ALIEN_SPEED: 500,
+    ALIEN_ROW_LENGTH: 8,
+    ALIEN_ROW_COUNT: 3
+}
+
 
 var gBoard
 var gGame
@@ -102,7 +107,7 @@ function startGame() {
     if (gGame.isOn) return
     gGame.isOn = true
 
-    gIntervalAliens = setInterval(moveAliens, ALIEN_SPEED)
+    gIntervalAliens = setInterval(moveAliens, gLevel.ALIEN_SPEED)
     placeSpaceCandies()
 
     document.querySelector('.start-btn').classList.add('disabled')
@@ -117,7 +122,7 @@ function restartGame() {
     init()
     gGame.isOn = true
 
-    gIntervalAliens = setInterval(moveAliens, ALIEN_SPEED)
+    gIntervalAliens = setInterval(moveAliens, gLevel.ALIEN_SPEED)
     placeSpaceCandies()
 
     var elStartBtn = document.querySelector('.start-btn')
@@ -145,6 +150,14 @@ function gameOver() {
     clearInterval(gCandiesInterval)
     gGame.isOn = false
     showModal('Game Over')
+}
+
+function onSetLevel(aliensRowCount, alienSpeed) {
+    gLevel.ALIEN_ROW_COUNT = aliensRowCount
+    gLevel.ALIEN_SPEED = alienSpeed
+
+    clearInterval(gIntervalAliens)
+    init()
 }
 
 function showModal(msg) {
