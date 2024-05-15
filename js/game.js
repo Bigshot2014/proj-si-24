@@ -130,12 +130,13 @@ function restartGame() {
 
     gHero.shields = 3
     updateShieldDisplay()
+    showCustomModal()
 
     gHero.life = 3
     getLives()
 
-    gIntervalAliens = setInterval(moveAliens, gLevel.ALIEN_SPEED)
     placeSpaceCandies()
+    if (gRockInterval) clearInterval(gRockInterval)
 
     var elStartBtn = document.querySelector('.start-btn')
     elStartBtn.classList.add('disabled')
@@ -213,7 +214,6 @@ function handleSpaceCandyHit(pos) {
     }
     renderBoard(gBoard)
 }
-
 
 function getSpaceCandyHTML() {
     return `<span class="space-candy">${SPACE_CANDY_IMG}</span>`

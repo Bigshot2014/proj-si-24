@@ -18,12 +18,7 @@
     </div>
     <div class="controls-container">
 
-         <div class="levels-container">
-            <button onclick="onSetLevel(3, 500)">Easy</button>
-            <button onclick="onSetLevel(4, 400)">Normal</button>
-            <button onclick="onSetLevel(5, 300)">Hard</button>
-        </div>
-
+         
         <div class="lives-container">
             <span class="heart"></span>
         </div>
@@ -56,7 +51,24 @@
         <span class="blow-negs">Blow up neighbors (shoot then press n)</span>
 
         </button>
+<div class="custom-modal">
+    <h2>Choose Level</h2>
+    <div class="levels-container">
+        <button onclick="onSetLevel(3, 500)">Easy</button>
+        <button onclick="onSetLevel(4, 400)">Normal</button>
+        <button onclick="onSetLevel(5, 300)">Hard</button>
     </div>
+
+    <h2>Choose Your player</h2>
+    <div class="player-options">
+        <img src="img/hero1.png" onclick="selectPlayer('img/hero1.png')" alt="Hero 1">
+        <img src="img/hero2.png" onclick="selectPlayer('img/hero2.png')" alt="Hero 2">
+        <img src="img/hero3.png" onclick="selectPlayer('img/hero3.png')" alt="Hero 3">
+        <br>
+        <button onclick="hideCustomModal()">Close</button>
+    </div>
+</div>
+</div>
 
     <footer>Moshik Alper</footer>
     <script src="js/util.js"></script>

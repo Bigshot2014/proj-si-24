@@ -234,9 +234,8 @@ function getAlienShooterPos() {
 
 function alienShoot() {
     if (!gGame.isOn) return
-    var alienPos = getAlienShooterPos()
-
     
+    var alienPos = getAlienShooterPos()
 
     var rockPos = { i: alienPos.i + 1, j: alienPos.j}
     
@@ -264,6 +263,8 @@ function startAlienShootingInterval() {
 }
 
 function handleRockHit(pos) {
+    if (gHero.isShield) return
+    
     if (pos.i === gHero.pos.i && pos.j === gHero.pos.j) {
         updateCell(gHero.pos, HERO)
         gHero.life--

@@ -12,8 +12,6 @@
     --color-three: #0095ff;
     --color-four: #d5d8f8;
     --color-five: #1abbc9;
-
-
 }
 
 body {
@@ -116,10 +114,6 @@ h2 {
     color: var(--color-four);
 }
 
-.red-shield {
-    background-color: red;
-}
-
 .board-container {
     width: 50vw;
     height: 30vw;
@@ -200,7 +194,6 @@ h2 .msg {
     display: none;
 }
 
-
 .super-attacks-count {
     margin-top: 20px;
     padding: 6px 12px;
@@ -214,7 +207,6 @@ h2 .msg {
     pointer-events: none;
     
 }
-
 .super-activated {
     background-color: var(--color-two);
     border: var(--color-one);
@@ -240,4 +232,37 @@ h2 .msg {
     background-color: var(--color-one);
     display: flex;
     justify-content: center;
+}
+
+.custom-modal h2 {
+    color: var(--color-four);
+}
+
+.custom-modal {
+    position: fixed;
+
+    background-color: var(--color-three);
+    border-radius: 8px;
+    padding: 30px;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.custom-modal button {
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: var(--color-four);
+    color: var(--color-five);
+    border: var(--color-five) solid 1px;
+    border-radius: 20px;
+    font-weight: bolder;
+
+}
+
+.player-options img {
+    width: 100px;
+    cursor: pointer;
+    margin-bottom: 20px;
 }

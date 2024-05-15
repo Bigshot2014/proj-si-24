@@ -1,6 +1,6 @@
 'use strict'
 
-const HERO_IMG = '<img src="img/hero.png">'
+var HERO_IMG = '<img src="img/hero.png">'
 const LASER_IMG = '<img src="img/laser.png">'
 const SUPER_LASER_IMG = '<img src="img/super-laser.png">'
 const BLAST_IMG = '<img src="img/blast.png">'
@@ -28,7 +28,6 @@ var gHero = {
     superAttackCount: 3,
     life: 3,
     shields: 3
-
 }
 
 function createHero(board) {
@@ -110,7 +109,6 @@ function shoot() {
         }
 
         handleAlienHit(laserPos, 1)
-
         handleSpaceCandyHit(laserPos)
 
         if (gHero.isSuper) {
@@ -196,7 +194,6 @@ function updateSuperAttacksCount(diff) {
     document.querySelector('.super-attacks-count').innerText = `Super mode attacks: ${gHero.superAttackCount} (press x)`
 }
 
-
 function getLives() {
     var life = gHero.life
     var elLifeSpan = document.querySelector('.lives-container span')
@@ -233,6 +230,24 @@ function updateShieldDisplay() {
         countShieldHtml += '<img src="img/shield.png">'
     }
     elShieldSpan.innerHTML = countShieldHtml
+}
+
+function showCustomModal() {
+    document.querySelector('.custom-modal').classList.remove('hidden')
+}
+
+function hideCustomModal() {
+    document.querySelector('.custom-modal').classList.add('hidden')
+}
+
+function selectPlayer(img) {
+    HERO_IMG = `<img src="${img}" alt="Player">`
+    renderHero()
+}
+
+function renderHero() {
+    const elHeroElement = document.querySelector('.hero')
+    elHeroElement.innerHTML = getHeroHTML()
 }
 
 function deactivateShield() {
