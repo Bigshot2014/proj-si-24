@@ -11,6 +11,11 @@ var gAliensBottomRowIdx
 
 var gIsAlienFreeze
 
+var gAliensShotInterval
+var gRockInterval
+const ROCK_SPEED = 200
+const ROCK_IMG = '<img src="img/rock.png">'
+
 
 function createAliens(board) {
     gAliens = []
@@ -25,6 +30,9 @@ function createAliens(board) {
     gAliensTopRowIdx = 0
     gAliensBottomRowIdx = gAliensTopRowIdx + gLevel.ALIEN_ROW_COUNT - 1
 
+    // if (gAliensShotInterval) clearInterval(gAliensShotInterval)
+        gAliensShotInterval = setInterval(alienShoot, 4000)
+
 }
 
 function createAlien(board, row, col) {
@@ -32,7 +40,8 @@ function createAlien(board, row, col) {
     
     const alien = {
         location: { i: row, j: col },
-        image: alienImg
+        image: alienImg,
+        isShoot: false
     }
     gAliens.push(alien)
     board[alien.location.i][alien.location.j].gameObject = ALIEN
@@ -204,5 +213,82 @@ function getAlienHTML(row) {
     return `<span class="alien"><img src="${alien.image}"></span>`
 }
 
+function getRockHTML() {
+    return `<span class="rock">${ROCK_IMG}</span>`
+}
+
+
+function getAlienShooterPos() {
+    const rockPositions = []
+
+    for (var k = 0; k < BOARD_SIZE; k++) {
+        const currCell = gBoard[gAliensBottomRowIdx][k]
+        if (currCell.gameObject === ALIEN) {
+            rockPositions.push({ i: gAliensBottomRowIdx, j: k})
+        }   
+    }
+    var randomIdx = getRandomIntInclusive(0, rockPositions.length - 1)
+    var rockPos = rockPositions[randomIdx]
+    return rockPos
+}
+
+function alienShoot() {
+    if (!gGame.isOn) return
+    var alienPos = getAlienShooterPos()
+
+    
+
+    var rockPos = { i: alienPos.i + 1, j: alienPos.j}
+    
+    function moveRock() {
+        
+        rockPos.i++
+        
+        if (rockPos.i >= BOARD_SIZE) {
+            clearInterval(gAliensShotInterval)
+            return
+        }
+        blinkRock(rockPos)
+        handleRockHit(rockPos)
+
+        setTimeout(moveRock, ROCK_SPEED)
+    }
+   
+    moveRock()
+
+}
+
+function startAlienShootingInterval() {
+    clearInterval(gAliensShotInterval)
+    gAliensShotInterval = setInterval(alienShoot, 2000)
+}
+
+function handleRockHit(pos) {
+    if (pos.i === gHero.pos.i && pos.j === gHero.pos.j) {
+        updateCell(gHero.pos, HERO)
+        gHero.life--
+        gameOver()
+        getLives()
+
+        clearInterval(gRockInterval)
+        setTimeout(startAlienShootingInterval, 1000)
+
+    } else {
+        clearInterval(gRockInterval)
+    }
+    renderBoard(gBoard)
+   
+}
+
+function blinkRock(pos) {
+    updateCell(pos, ROCK)
+    renderBoard(gBoard)
+
+    setTimeout(() => {
+        if (gBoard[pos.i][pos.j].gameObject === ROCK) {
+            updateCell(pos, null)
+        }
+    }, ROCK_SPEED)
+}
 
 

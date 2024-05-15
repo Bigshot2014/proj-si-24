@@ -8,6 +8,7 @@ const LASER = '⤊'
 const SUPER_LASER = '^'
 const BLAST = 'B'
 const SPACE_CANDY = 'C'
+const ROCK = 'R'
 
 const SKY = 'SKY'
 
@@ -41,6 +42,9 @@ function init() {
 
     gIsAlienFreeze = false
     renderBoard(gBoard)
+
+    getLives() 
+    updateShieldDisplay()
 
     hideModal()
     updateSuperAttacksCount(0)
@@ -81,6 +85,8 @@ function renderBoard(board) {
                 strHTML += getBlastHTML()
             } else if (cell.gameObject === SPACE_CANDY) {
                 strHTML += getSpaceCandyHTML()
+            } else if (cell.gameObject === ROCK) {
+                strHTML += getRockHTML()
             }
             `</td>`
         }
@@ -106,7 +112,7 @@ function updateCell(pos, gameObject = null) {
 function startGame() {
     if (gGame.isOn) return
     gGame.isOn = true
-
+    
     gIntervalAliens = setInterval(moveAliens, gLevel.ALIEN_SPEED)
     placeSpaceCandies()
 
@@ -121,6 +127,12 @@ function restartGame() {
 
     init()
     gGame.isOn = true
+
+    gHero.shields = 3
+    updateShieldDisplay()
+
+    gHero.life = 3
+    getLives()
 
     gIntervalAliens = setInterval(moveAliens, gLevel.ALIEN_SPEED)
     placeSpaceCandies()
@@ -146,6 +158,7 @@ function checkVictory() {
 }
 
 function gameOver() {
+    if (gHero.life > 0) return
     clearInterval(gIntervalAliens)
     clearInterval(gCandiesInterval)
     gGame.isOn = false
@@ -205,3 +218,5 @@ function handleSpaceCandyHit(pos) {
 function getSpaceCandyHTML() {
     return `<span class="space-candy">${SPACE_CANDY_IMG}</span>`
 }
+
+

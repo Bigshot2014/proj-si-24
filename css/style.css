@@ -21,6 +21,7 @@ body {
     font-weight: bold;
     text-align: center;
 
+    margin: 0;
     background-image: url('../img/bg.jpg');
     background-size: cover;
     background-position: center;
@@ -54,17 +55,69 @@ footer {
 }
 
 .top-container h2 {
-    margin: 10px;
+    margin: 2px;
     color: var(--color-four);
 }
-
 
 h2 {
     font-size: 16px;
 }
 
+
 .controls-container {
+    display: flex; 
+    justify-content: space-evenly;
+    align-items: center;
     background-color: var(--color-one);
+    padding: 10px; 
+    height: 80px;
+}
+
+
+.controls-container button {
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: var(--color-four);
+    color: var(--color-five);
+    border: var(--color-five) solid 1px;
+    border-radius: 20px;
+    font-weight: bolder;
+}
+
+
+.start-btn {
+    margin-right: 10px; 
+}
+
+.restart-btn {
+    margin-right: 10px; 
+}
+
+
+.start-btn img {
+    width: 12px;
+}
+
+.restart-btn img {
+    width: 12px;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    user-select: none;
+    pointer-events: none;
+}
+
+.levels-container h2,
+.lives-container h2,
+.shield-container h2 {
+    margin: 10px;
+    color: var(--color-four);
+}
+
+.red-shield {
+    background-color: red;
 }
 
 .board-container {
@@ -106,6 +159,20 @@ td {
     width: 30px;
 }
 
+.rock img {
+    width: 30px;
+}
+
+.heart img {
+    width: 30px;
+    margin: 4px;
+}
+
+.shield img {
+    width: 30px;
+    margin: 4px;
+}
+
 .space-candy img {
     width: 20px;
 }
@@ -133,44 +200,6 @@ h2 .msg {
     display: none;
 }
 
-.start-btn {
-    margin-top: 20px;
-    padding: 6px 12px;
-    cursor: pointer;
-    background-color: var(--color-four);
-    color: var(--color-five);
-    border: var(--color-five) solid 1px;
-    border-radius: 20px;
-    font-weight: bolder;
-}
-
-.start-btn img {
-    width: 12px;
-}
-
-.restart-btn {
-    margin-top: 20px;
-    padding: 6px 12px;
-    cursor: pointer;
-    background-color: var(--color-four);
-    color: var(--color-five);
-    border: var(--color-five) solid 1px;
-    border-radius: 20px;
-    font-weight: bolder;
-    margin-right: 30px;
-    outline: none;;
-}
-
-.restart-btn img {
-    width: 12px;
-}
-
-.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    user-select: none;
-    pointer-events: none;
-}
 
 .super-attacks-count {
     margin-top: 20px;
@@ -211,20 +240,4 @@ h2 .msg {
     background-color: var(--color-one);
     display: flex;
     justify-content: center;
-}
-
-.bottom-container h2 {
-    margin: 10px;
-    color: var(--color-four);
-}
-
-.bottom-container button {
-    height: 20px;
-    width: 70px ;
-    cursor: pointer;
-    background-color: var(--color-four);
-    color: var(--color-five);
-    border: var(--color-five) solid 1px;
-    border-radius: 20px;
-    font-weight: bolder;
 }

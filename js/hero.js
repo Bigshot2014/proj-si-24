@@ -12,6 +12,8 @@ const SUPER_LASER_SPEED = 60
 var gLaserInterval
 var gCurrLaserPos = { i: null, j: null }
 
+var gShieldInterval
+
 const BLAST_DURATION = 1000
 
 var gHero = {
@@ -21,7 +23,12 @@ var gHero = {
     },
     isShoot: false,
     isSuper: false,
-    superAttackCount: 3
+    isShield: false,
+
+    superAttackCount: 3,
+    life: 3,
+    shields: 3
+
 }
 
 function createHero(board) {
@@ -49,9 +56,12 @@ function onKeyDown(event) {
             if (gHero.superAttackCount === 0) return
             getSuperMode()
             break;
+        case 'KeyZ':
+            if (gHero.isShield) return
+            getShield()
+            break;
     }
 }
-
 
 function moveHero(dir) {
     if (!gGame.isOn) return
@@ -78,8 +88,9 @@ function shoot() {
 
         if (gHero.superAttackCount < 0) {
             gHero.isSuper = false
-            document.querySelector('.super-attacks-count').classList.remove('super-activated')
-            document.querySelector('.super-attacks-count').innerText = 'No Super Attacks'
+            var elSuperAttackCount = document.querySelector('.super-attacks-count')
+            elSuperAttackCount.classList.remove('super-activated')
+            elSuperAttackCount.innerText = 'No Super Attacks'
         }
     }
     gHero.isShoot = true
@@ -127,7 +138,6 @@ function blinkLaser(pos, laserMode, laserSpeed) {
 function blowUpNegs() {
     if (gCurrLaserPos.i === null && gCurrLaserPos.j === null) return
     const negPositions = getNegsPos(gCurrLaserPos)
-    gIsBlowNegs = true
 
     var alienBlownCount = 0
 
@@ -186,6 +196,50 @@ function updateSuperAttacksCount(diff) {
     document.querySelector('.super-attacks-count').innerText = `Super mode attacks: ${gHero.superAttackCount} (press x)`
 }
 
+
+function getLives() {
+    var life = gHero.life
+    var elLifeSpan = document.querySelector('.lives-container span')
+
+    var countHeartsHtml = ''
+    for (var i = 0; i < life; i++) {
+        countHeartsHtml += '<img src="img/heart.png">'
+    }
+    elLifeSpan.innerHTML = countHeartsHtml
+}
+
+function getShield() {
+    if (gHero.shields === 0) return
+
+    gHero.isShield = true
+    gHero.shields--
+    
+    updateShieldDisplay()
+    
+    var elPlayerSpan = document.querySelector('.hero')
+    elPlayerSpan.style.backgroundColor = 'yellow'
+
+    setTimeout(() => {
+        deactivateShield()
+    }, 5000)
+}
+
+function updateShieldDisplay() {
+    var shieldCount = gHero.shields
+    var elShieldSpan = document.querySelector('.shield-container span')
+    
+    var countShieldHtml = ''
+    for (var i = 0; i < shieldCount; i++) {
+        countShieldHtml += '<img src="img/shield.png">'
+    }
+    elShieldSpan.innerHTML = countShieldHtml
+}
+
+function deactivateShield() {
+    clearInterval(gShieldInterval)
+    gHero.isShield = false
+    updateShieldDisplay()
+}
 
 function getHeroHTML() {
     return `<span class="hero">${HERO_IMG}</span>`
